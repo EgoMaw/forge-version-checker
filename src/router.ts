@@ -1,3 +1,5 @@
+import satisfies from 'version-range';
+import { z } from 'zod';
 import {
 	cors,
 	error,
@@ -7,9 +9,6 @@ import {
 	Router,
 	text,
 } from 'itty-router';
-import { coerce, satisfies } from 'semver';
-import { z, ZodError } from 'zod';
-import { RequestWithContent } from './types';
 
 const { preflight, corsify } = cors({
 	origin: [
@@ -31,12 +30,8 @@ const headers: ResponseHandler<IRequest> = response => {
 };
 
 const schema = z.object({
-	'minecraft-version': z
-		.string({
-			required_error: 'The minecraft version is required',
-		})
-		.min(2),
-	'forge-version': z.string().default(''),
+	'minecraft-version': z.string().min(2),
+	'forge-version': z.string(),
 });
 
 type RequestWithContent = IRequest & {
@@ -48,9 +43,6 @@ const withJsonContent: RequestHandler<RequestWithContent, CFArgs> = async reques
 		let json: any = await request.json();
 		request.content = schema.parse(json);
 	} catch (err: any) {
-		if (err instanceof ZodError) {
-			return error(400, err.format());
-		}
 		return error(400, 'Invalid JSON payload');
 	}
 	return undefined;
@@ -91,11 +83,6 @@ export const router = Router<IRequest, CFArgs>({
 
 		// Handle special case of just mc version being latest
 		if (mcVersion === 'latest') {
-			const coercion = coerce(forgeVersion);
-			if (!coercion) {
-				return error(404, `Could not parse the forge version`);
-			}
-
 			let isGoin = true;
 			let cursor = null;
 
@@ -103,8 +90,7 @@ export const router = Router<IRequest, CFArgs>({
 				const data = await env.FORGE_VERSIONS.list<KVMeta>({ cursor, prefix: '1.' });
 				isGoin = !data.list_complete;
 				for (const key of data.keys) {
-					console.log(key.name, key.metadata);
-					if (satisfies(coercion, `>=${key.metadata!.min} <=${key.metadata!.max}`)) {
+					if (satisfies(forgeVersion, `>=${key.metadata!.min} <=${key.metadata!.max}`)) {
 						mcVersion = key.name;
 						break;
 					}

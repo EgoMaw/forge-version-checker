@@ -10,5 +10,6 @@ export default defineWorkersConfig({
 				wrangler: { configPath: './wrangler.toml' },
 			},
 		},
+		alias: { worker: new URL('src/index.ts', import.meta.url).pathname },
 	},
 });

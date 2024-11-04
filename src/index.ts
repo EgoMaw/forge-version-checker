@@ -1,6 +1,6 @@
 import { XMLParser } from 'fast-xml-parser';
 import { fetcher } from 'itty-fetcher';
-import { coerce, sort } from 'semver';
+import versionCompare from 'version-compare';
 import { router } from './router';
 
 const api = fetcher({
@@ -12,18 +12,14 @@ const api = fetcher({
 export default {
 	// The scheduled handler is invoked at the interval set in our wrangler.toml's
 	// [[triggers]] configuration.
-	async scheduled(_event, env): Promise<void> {
+	async scheduled(_event, env, _ctx): Promise<void> {
 		const { promos } = await api.get<ForgePromoResponse>(env.FORGE_PROMO_URL);
 
-		const versions = Object.keys(promos).map(x => x.split('-')[0]!);
-		const sortedVersions = sort(
-			versions.map(x => {
-				const coercion = coerce(x, { includePrerelease: true });
-				return coercion ? coercion.toString() : x;
-			}),
-			{ loose: true }
-		);
-		const latestVersion = sortedVersions[sortedVersions.length - 1];
+		const versions = Object.keys(promos)
+			.map(x => x.split('-')[0]!)
+			.sort(versionCompare);
+
+		const latestVersion = versions[versions.length - 1];
 
 		// Hot Link latest version
 		await env.FORGE_VERSIONS.put(
@@ -44,15 +40,8 @@ export default {
 		for (const version of versions) {
 			const forgeVersions = xmlVersions
 				.filter(x => x.startsWith(`${version}-`))
-				.map(x => x.split('-')[1]!);
-
-			const forgeCoers = sort(
-				forgeVersions.map(x => {
-					const coercion = coerce(x, { includePrerelease: true });
-					return coercion ? coercion.toString() : x;
-				}),
-				{ loose: true }
-			);
+				.map(x => x.split('-')[1]!)
+				.sort(versionCompare);
 
 			await env.FORGE_VERSIONS.put(
 				version,
@@ -63,8 +52,8 @@ export default {
 				}),
 				{
 					metadata: {
-						min: forgeCoers[0],
-						max: forgeCoers[forgeCoers.length - 1],
+						min: forgeVersions[0],
+						max: forgeVersions[forgeVersions.length - 1],
 					},
 				}
 			);
