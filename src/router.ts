@@ -119,4 +119,5 @@ export const router = Router<IRequest, CFArgs>({
 		}
 
 		return `${mcVersion}-${forgeVersion}`;
-	});
+	})
+	.all('*', () => error(404));
