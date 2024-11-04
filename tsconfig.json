@@ -1,0 +1,46 @@
+{
+	"compilerOptions": {
+		"allowJs": false,
+		"allowSyntheticDefaultImports": true,
+		"composite": false,
+		"declaration": true,
+		"declarationMap": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"inlineSources": false,
+		"isolatedModules": true,
+		"moduleResolution": "bundler",
+		"newLine": "lf",
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"preserveWatchOutput": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"stripInternal": true,
+		"useDefineForClassFields": true,
+		"lib": [
+			"ESNext"
+		],
+		"module": "ESNext",
+		"target": "ESNext",
+		"types": ["@cloudflare/workers-types/experimental", "@cloudflare/vitest-pool-workers"]
+	},
+	"include": [
+		"src/**/*.ts",
+		"tests/**/*.ts",
+		"vitest.config.ts",
+		"worker-configuration.d.ts",
+	],
+	"exclude": [
+		"dist",
+		"node_modules"
+	]
+}
