@@ -5,7 +5,8 @@ import { router } from './router';
 
 const api = fetcher({
 	headers: {
-		'User-Agent': 'Forge Version Checker Worker',
+		'User-Agent':
+			'Forge Version Checker / v1.0.0 (https://github.com/EgoMaw/forge-version-checker)',
 	},
 });
 
