@@ -1,14 +1,13 @@
-
 name = "forge-version-checker"
 main = "src/index.ts"
 compatibility_date = "2024-10-22"
 compatibility_flags = ['nodejs_compat']
 
-crons = ["* */12 * * *"] # * * * * * = run every minute
+crons = ["* */12 * * *"]
 
 [vars]
 FORGE_MAVEN_URL = "THE MAVEN REPO URL"
-FORGE_PROMO_URL = "THE MAVEN REPO URL"
+FORGE_PROMO_URL = "THE PROMOTIONS REPO URL"
 
 
 [[kv_namespaces]]
