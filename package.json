@@ -16,19 +16,19 @@
 		"**/*": "prettier --write --ignore-unknown"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.5.24",
-		"@cloudflare/workers-types": "^4.20241022.0",
+		"@cloudflare/vitest-pool-workers": "^0.5.33",
+		"@cloudflare/workers-types": "^4.20241205.0",
 		"@egomaw/eslint-config": "^1.1.0",
-		"@eslint/js": "^9.14.0",
+		"@eslint/js": "^9.16.0",
 		"cross-env": "^7.0.3",
-		"husky": "^9.1.6",
-		"eslint": "^9.14.0",
+		"eslint": "^9.16.0",
+		"husky": "^9.1.7",
 		"lint-staged": "^15.2.10",
 		"rimraf": "^6.0.1",
-		"typescript": "^5.5.2",
-		"typescript-eslint": "^8.12.2",
-		"vitest": "^2.1.4",
-		"wrangler": "^3.60.3"
+		"typescript": "^5.7.2",
+		"typescript-eslint": "^8.17.0",
+		"vitest": "^2.1.8",
+		"wrangler": "^3.92.0"
 	},
 	"dependencies": {
 		"fast-xml-parser": "^4.5.0",

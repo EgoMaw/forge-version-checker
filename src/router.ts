@@ -1,5 +1,3 @@
-import satisfies from 'version-range';
-import { z } from 'zod';
 import {
 	cors,
 	error,
@@ -9,6 +7,8 @@ import {
 	Router,
 	text,
 } from 'itty-router';
+import satisfies from 'version-range';
+import { z } from 'zod';
 
 const { preflight, corsify } = cors({
 	origin: [
@@ -78,10 +78,10 @@ export const router = Router<IRequest, CFArgs>({
 				return error(404, `Failed to get latest version information`);
 			}
 
-			return `${data.minecraft}-${forgeVersion === 'recommended' ? data['forge-recommended'] : data['forge-latest']}`;
+			return `${data.minecraft}-${data[`forge-${forgeVersion}`]}`;
 		}
 
-		// Handle special case of just mc version being latest
+		// Handle a special case of just MC version being latest
 		if (mcVersion === 'latest') {
 			let isGoin = true;
 			let cursor = null;
