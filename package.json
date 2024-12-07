@@ -16,7 +16,7 @@
 		"**/*": "prettier --write --ignore-unknown"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.5.33",
+		"@cloudflare/vitest-pool-workers": "^0.5.34",
 		"@cloudflare/workers-types": "^4.20241205.0",
 		"@egomaw/eslint-config": "^1.1.0",
 		"@eslint/js": "^9.16.0",
@@ -28,7 +28,7 @@
 		"typescript": "^5.7.2",
 		"typescript-eslint": "^8.17.0",
 		"vitest": "^2.1.8",
-		"wrangler": "^3.92.0"
+		"wrangler": "^3.93.0"
 	},
 	"dependencies": {
 		"fast-xml-parser": "^4.5.0",
